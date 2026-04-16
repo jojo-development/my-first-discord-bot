@@ -1,12 +1,15 @@
 import discord
 from discord.ext import commands
 import os
+from dotenv import load_dotenv
+
+# ── Load environment variables from .env file ──────────────────────
+load_dotenv()
+TOKEN = os.getenv("DISCORD_TOKEN")
 
 # ── Bot Configuration ──────────────────────────────────────────────
-TOKEN = os.getenv("DISCORD_TOKEN")   # Store your token as an env variable (never hardcode it)
-
 intents = discord.Intents.default()
-intents.message_content = True       # Required to read message content
+intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
@@ -51,5 +54,5 @@ async def ship(ctx):
 # ── Run the bot ─────────────────────────────────────────────────────
 if __name__ == "__main__":
     if not TOKEN:
-        raise ValueError("No DISCORD_TOKEN found. Set it as an environment variable.")
+        raise ValueError("❌ DISCORD_TOKEN not found. Check your .env file.")
     bot.run(TOKEN)
